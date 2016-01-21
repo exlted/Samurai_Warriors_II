@@ -11,6 +11,9 @@ namespace Game1
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        private Texture2D earth;
+        private Texture2D background;
+        private Texture2D shuttle;
 
         public Game1()
         {
@@ -41,6 +44,9 @@ namespace Game1
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game content here
+            background = Content.Load<Texture2D>("stars");
+            earth = Content.Load<Texture2D>("earth");
+            shuttle = Content.Load<Texture2D>("Shuttle");
         }
 
         /// <summary>
@@ -60,6 +66,7 @@ namespace Game1
         protected override void Update(GameTime gameTime)
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
+
                 Exit();
 
             // TODO: Add your update logic here
@@ -73,7 +80,15 @@ namespace Game1
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.Bisque);
+
+            spriteBatch.Begin();
+
+            spriteBatch.Draw(background, new Rectangle(0, 0, 800, 480), Color.White);
+            spriteBatch.Draw(earth, new Vector2(400, 240), Color.White);
+            spriteBatch.Draw(shuttle, new Vector2(450, 240), Color.White);
+
+            spriteBatch.End();
 
             // TODO: Add your drawing code here
 
