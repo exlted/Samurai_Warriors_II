@@ -14,6 +14,8 @@ namespace Game1
         private Texture2D earth;
         private Texture2D background;
         private Texture2D shuttle;
+        private float angle = 0;
+        private float vel = 0;
 
         public Game1()
         {
@@ -70,7 +72,11 @@ namespace Game1
                 Exit();
 
             // TODO: Add your update logic here
-
+            if(Keyboard.GetState().IsKeyDown(Keys.Left))
+                vel += 0.0001f;
+            if(Keyboard.GetState().IsKeyDown(Keys.Right))
+                vel -= 0.0001f;
+            angle += vel;
             base.Update(gameTime);
         }
 
@@ -86,7 +92,13 @@ namespace Game1
 
             spriteBatch.Draw(background, new Rectangle(0, 0, 800, 480), Color.White);
             spriteBatch.Draw(earth, new Vector2(400, 240), Color.White);
-            spriteBatch.Draw(shuttle, new Vector2(450, 240), Color.White);
+
+            Vector2 location = new Vector2(400, 240);
+            Rectangle sourceRectangle = new Rectangle(0, 0, shuttle.Width, shuttle.Height);
+            Vector2 origin = new Vector2(0, 0);
+            //Vector2 origin = new Vector2(shuttle.Width / 2, shuttle.Height / 2);
+
+            spriteBatch.Draw(shuttle, location, sourceRectangle, Color.White, angle, origin, 1.0f, SpriteEffects.None, 1);
 
             spriteBatch.End();
 
