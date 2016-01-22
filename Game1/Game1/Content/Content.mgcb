@@ -53,3 +53,9 @@
 /processorParam:TextureFormat=Compressed
 /build:NewSpriteFont.spritefont
 
+#begin music.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:music.wav
+

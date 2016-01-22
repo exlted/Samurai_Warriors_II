@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Audio;
 
 namespace Game1
 {
@@ -12,6 +13,8 @@ namespace Game1
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         SpriteFont font;
+        AudioEngine sound;
+        private SoundEffect music;
         private Texture2D earth;
         private Texture2D background;
         private Texture2D shuttle;
@@ -52,6 +55,7 @@ namespace Game1
             earth = Content.Load<Texture2D>("earth");
             shuttle = Content.Load<Texture2D>("Shuttle");
             font = Content.Load<SpriteFont>("NewSpriteFont");
+            music = Content.Load<SoundEffect>("music");
         }
 
         /// <summary>
@@ -83,6 +87,8 @@ namespace Game1
                     vel -= 0.0001f;
                 if (Keyboard.GetState().IsKeyDown(Keys.F))
                     graphics.ToggleFullScreen();
+                if (Keyboard.GetState().IsKeyDown(Keys.M))
+                    music.Play();
                 angle += vel;
                 base.Update(gameTime);
             }    
