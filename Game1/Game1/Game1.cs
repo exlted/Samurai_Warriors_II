@@ -21,7 +21,8 @@ namespace Game1
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-            this.TargetElapsedTime = new System.TimeSpan(0, 0, 0, 0, 33);
+            IsMouseVisible = true;
+            TargetElapsedTime = new System.TimeSpan(0, 0, 0, 0, 33);
         }
 
         /// <summary>
@@ -33,7 +34,6 @@ namespace Game1
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-
             base.Initialize();
         }
 
@@ -79,6 +79,8 @@ namespace Game1
                     vel += 0.0001f;
                 if (Keyboard.GetState().IsKeyDown(Keys.Right))
                     vel -= 0.0001f;
+                if (Keyboard.GetState().IsKeyDown(Keys.F))
+                    graphics.ToggleFullScreen();
                 angle += vel;
                 base.Update(gameTime);
             }    
