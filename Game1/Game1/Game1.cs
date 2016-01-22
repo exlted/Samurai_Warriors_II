@@ -21,6 +21,7 @@ namespace Game1
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+            this.TargetElapsedTime = new System.TimeSpan(0, 0, 0, 0, 33);
         }
 
         /// <summary>
@@ -67,17 +68,20 @@ namespace Game1
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
+            if (IsActive)
+            {
+                if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
 
-                Exit();
+                    Exit();
 
-            // TODO: Add your update logic here
-            if(Keyboard.GetState().IsKeyDown(Keys.Left))
-                vel += 0.0001f;
-            if(Keyboard.GetState().IsKeyDown(Keys.Right))
-                vel -= 0.0001f;
-            angle += vel;
-            base.Update(gameTime);
+                // TODO: Add your update logic here
+                if (Keyboard.GetState().IsKeyDown(Keys.Left))
+                    vel += 0.0001f;
+                if (Keyboard.GetState().IsKeyDown(Keys.Right))
+                    vel -= 0.0001f;
+                angle += vel;
+                base.Update(gameTime);
+            }    
         }
 
         /// <summary>
@@ -105,6 +109,20 @@ namespace Game1
             // TODO: Add your drawing code here
 
             base.Draw(gameTime);
+        }
+
+        protected override void OnActivated(object sender, System.
+                                            EventArgs args)
+        {
+            this.Window.Title = "Active Application";
+            base.OnActivated(sender, args);
+        }
+
+        protected override void OnDeactivated(object sender, System.
+                                              EventArgs args)
+        {
+            this.Window.Title = "InActive Application";
+            base.OnActivated(sender, args);
         }
     }
 }
