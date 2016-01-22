@@ -11,6 +11,7 @@ namespace Game1
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        SpriteFont font;
         private Texture2D earth;
         private Texture2D background;
         private Texture2D shuttle;
@@ -50,6 +51,7 @@ namespace Game1
             background = Content.Load<Texture2D>("stars");
             earth = Content.Load<Texture2D>("earth");
             shuttle = Content.Load<Texture2D>("Shuttle");
+            font = Content.Load<SpriteFont>("NewSpriteFont");
         }
 
         /// <summary>
@@ -105,8 +107,10 @@ namespace Game1
             //Vector2 origin = new Vector2(shuttle.Width / 2, shuttle.Height / 2);
 
             spriteBatch.Draw(shuttle, location, sourceRectangle, Color.White, angle, origin, 1.0f, SpriteEffects.None, 1);
-
+            spriteBatch.DrawString(font, "Hello, I am a font", new Vector2(100, 100), Color.WhiteSmoke);
             spriteBatch.End();
+
+            
 
             // TODO: Add your drawing code here
 
