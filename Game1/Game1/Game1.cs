@@ -2,6 +2,10 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Audio;
+using Microsoft.Xna.Framework.Storage;
+using System.Collections.Generic;
+using System;
+using System.IO;
 
 namespace Game1
 {
@@ -15,9 +19,8 @@ namespace Game1
         SpriteFont font;
         AudioEngine sound;
         private SoundEffect music;
-        private Texture2D earth;
-        private Texture2D background;
-        private Texture2D shuttle;
+        private Dictionary<string, Texture2D> textures = new Dictionary<string, Texture2D>();
+        private string[] import;
         private float angle = 0;
         private float vel = 0;
 
@@ -51,9 +54,11 @@ namespace Game1
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game content here
-            background = Content.Load<Texture2D>("stars");
-            earth = Content.Load<Texture2D>("earth");
-            shuttle = Content.Load<Texture2D>("Shuttle");
+            import = Directory.GetFiles(System.IO.Path.GetFullPath(@"../../../Content/Textures"));
+            for (int i = 0; i < import.Length; i++)
+            {
+                textures.Add(import[i], Content.Load<Texture2D>(Path.GetFileNameWithoutExtension(import[i])));
+            }
             font = Content.Load<SpriteFont>("NewSpriteFont");
             music = Content.Load<SoundEffect>("music");
         }
@@ -104,15 +109,15 @@ namespace Game1
 
             spriteBatch.Begin();
 
-            spriteBatch.Draw(background, new Rectangle(0, 0, 800, 480), Color.White);
-            spriteBatch.Draw(earth, new Vector2(400, 240), Color.White);
+            spriteBatch.Draw(textures["background"], new Rectangle(0, 0, 800, 480), Color.White);
+            spriteBatch.Draw(textures["earth"], new Vector2(400, 240), Color.White);
 
             Vector2 location = new Vector2(400, 240);
-            Rectangle sourceRectangle = new Rectangle(0, 0, shuttle.Width, shuttle.Height);
+            Rectangle sourceRectangle = new Rectangle(0, 0, textures["shuttle"].Width, textures["shuttle"].Height);
             Vector2 origin = new Vector2(0, 0);
             //Vector2 origin = new Vector2(shuttle.Width / 2, shuttle.Height / 2);
 
-            spriteBatch.Draw(shuttle, location, sourceRectangle, Color.White, angle, origin, 1.0f, SpriteEffects.None, 1);
+            spriteBatch.Draw(textures["shuttle"], location, sourceRectangle, Color.White, angle, origin, 1.0f, SpriteEffects.None, 1);
             spriteBatch.DrawString(font, "Hello, I am a font", new Vector2(100, 100), Color.WhiteSmoke);
             spriteBatch.End();
 
