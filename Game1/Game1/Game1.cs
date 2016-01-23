@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework.Storage;
 using System.Collections.Generic;
 using System;
 using System.IO;
+using BTEngine;
 
 namespace Game1
 {
@@ -16,11 +17,7 @@ namespace Game1
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        SpriteFont font;
         AudioEngine sound;
-        private Dictionary<string, SoundEffect> sounds = new Dictionary<string, SoundEffect>();
-        private Dictionary<string, Texture2D> textures = new Dictionary<string, Texture2D>();
-        private string[] import;
         private float angle = 0;
         private float vel = 0;
 
@@ -29,8 +26,9 @@ namespace Game1
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
-            this.
             TargetElapsedTime = new System.TimeSpan(0, 0, 0, 0, 33);
+            Window.Title = "Samurai Warriors II";
+            Window.AllowAltF4 = false;
         }
 
         /// <summary>
@@ -53,19 +51,7 @@ namespace Game1
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-
-            // TODO: use this.Content to load your game content here
-            import = Directory.GetFiles(Path.GetFullPath(@"../../../Content/Textures"));
-            for (int i = 0; i < import.Length; i++)
-            {
-                textures.Add(Path.GetFileNameWithoutExtension(import[i]), Content.Load<Texture2D>("Textures/" + Path.GetFileNameWithoutExtension(import[i])));
-            }
-            import = Directory.GetFiles(Path.GetFullPath(@"../../../Content/Music"));
-            for (int i = 0; i < import.Length; i++)
-            {
-                sounds.Add(Path.GetFileNameWithoutExtension(import[i]), Content.Load<SoundEffect>("Music/" + Path.GetFileNameWithoutExtension(import[i])));
-            }
-            font = Content.Load<SpriteFont>("Fonts/NewSpriteFont");
+            Assets.importFiles(this);
         }
 
         /// <summary>
@@ -98,7 +84,7 @@ namespace Game1
                 if (Keyboard.GetState().IsKeyDown(Keys.F))
                     graphics.ToggleFullScreen();
                 if (Keyboard.GetState().IsKeyDown(Keys.M))
-                    sounds["music"].Play();
+                    Assets.sounds["music"].Play();
                 angle += vel;
                 base.Update(gameTime);
             }
@@ -114,15 +100,22 @@ namespace Game1
 
             spriteBatch.Begin();
 
-            spriteBatch.Draw(textures["stars"], new Rectangle(0, 0, 800, 480), Color.White);
-            spriteBatch.Draw(textures["earth"], new Vector2(400, 240), Color.White);
+            //spriteBatch.Draw(Assets.textures["stars"], new Rectangle(0, 0, 800, 480), Color.White);
+            //spriteBatch.Draw(Assets.textures["earth"], new Vector2(400, 240), Color.White);
 
-            Vector2 location = new Vector2(400, 240);
-            Rectangle sourceRectangle = new Rectangle(0, 0, textures["shuttle"].Width, textures["shuttle"].Height);
-            Vector2 origin = new Vector2(0, 0);
-            //Vector2 origin = new Vector2(shuttle.Width / 2, shuttle.Height / 2);
-            spriteBatch.DrawString(font, "Hello, I am a font", new Vector2(100, 100), Color.WhiteSmoke);
-            spriteBatch.Draw(textures["shuttle"], location, sourceRectangle, Color.White, angle, origin, 1.0f, SpriteEffects.None, 1);
+            //Vector2 location = new Vector2(400, 240);
+            //Rectangle sourceRectangle = new Rectangle(0, 0, Assets.textures["shuttle"].Width, Assets.textures["shuttle"].Height);
+            //Vector2 origin = new Vector2(0, 0);
+            ////Vector2 origin = new Vector2(shuttle.Width / 2, shuttle.Height / 2);
+            //spriteBatch.DrawString(Assets.font, "Hello, I am a font", new Vector2(100, 100), Color.WhiteSmoke);
+            //spriteBatch.Draw(Assets.textures["shuttle"], location, sourceRectangle, Color.White, angle, origin, 1.0f, SpriteEffects.None, 1);
+            Texture2D rect = new Texture2D(graphics.GraphicsDevice, 80, 30);
+            Color[] data = new Color[80 * 30];
+            for (int i = 0; i < data.Length; ++i) data[i] = Color.Chocolate;
+            rect.SetData(data);
+            Vector2 coor = new Vector2(0, 0);
+            spriteBatch.Draw(rect, coor, Color.White);
+
             spriteBatch.End();
 
 
@@ -135,14 +128,12 @@ namespace Game1
         protected override void OnActivated(object sender, System.
                                             EventArgs args)
         {
-            this.Window.Title = "Active Application";
             base.OnActivated(sender, args);
         }
 
         protected override void OnDeactivated(object sender, System.
                                               EventArgs args)
         {
-            this.Window.Title = "InActive Application";
             base.OnActivated(sender, args);
         }
     }

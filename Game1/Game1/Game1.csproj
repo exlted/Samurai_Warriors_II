@@ -38,6 +38,12 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="BTEngine\Assets.cs" />
+    <Compile Include="BTEngine\BTEngine.cs" />
+    <Compile Include="BTEngine\Entity.cs" />
+    <Compile Include="BTEngine\Physics.cs" />
+    <Compile Include="BTEngine\Render.cs" />
+    <Compile Include="BTEngine\World.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
