@@ -57,10 +57,10 @@ namespace Game1
             import = Directory.GetFiles(System.IO.Path.GetFullPath(@"../../../Content/Textures"));
             for (int i = 0; i < import.Length; i++)
             {
-                textures.Add(import[i], Content.Load<Texture2D>(Path.GetFileNameWithoutExtension(import[i])));
+                textures.Add(Path.GetFileNameWithoutExtension(import[i]), Content.Load<Texture2D>("Textures/" + Path.GetFileNameWithoutExtension(import[i])));
             }
-            font = Content.Load<SpriteFont>("NewSpriteFont");
-            music = Content.Load<SoundEffect>("music");
+            font = Content.Load<SpriteFont>("Fonts/NewSpriteFont");
+            music = Content.Load<SoundEffect>("Music/music");
         }
 
         /// <summary>
@@ -109,7 +109,7 @@ namespace Game1
 
             spriteBatch.Begin();
 
-            spriteBatch.Draw(textures["background"], new Rectangle(0, 0, 800, 480), Color.White);
+            spriteBatch.Draw(textures["stars"], new Rectangle(0, 0, 800, 480), Color.White);
             spriteBatch.Draw(textures["earth"], new Vector2(400, 240), Color.White);
 
             Vector2 location = new Vector2(400, 240);
