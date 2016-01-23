@@ -29,6 +29,7 @@ namespace Game1
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
+            this.
             TargetElapsedTime = new System.TimeSpan(0, 0, 0, 0, 33);
         }
 
@@ -54,12 +55,12 @@ namespace Game1
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game content here
-            import = Directory.GetFiles(System.IO.Path.GetFullPath(@"../../../Content/Textures"));
+            import = Directory.GetFiles(Path.GetFullPath(@"../../../Content/Textures"));
             for (int i = 0; i < import.Length; i++)
             {
                 textures.Add(Path.GetFileNameWithoutExtension(import[i]), Content.Load<Texture2D>("Textures/" + Path.GetFileNameWithoutExtension(import[i])));
             }
-            import = Directory.GetFiles(System.IO.Path.GetFullPath(@"../../../Content/Music"));
+            import = Directory.GetFiles(Path.GetFullPath(@"../../../Content/Music"));
             for (int i = 0; i < import.Length; i++)
             {
                 sounds.Add(Path.GetFileNameWithoutExtension(import[i]), Content.Load<SoundEffect>("Music/" + Path.GetFileNameWithoutExtension(import[i])));
@@ -100,7 +101,7 @@ namespace Game1
                     sounds["music"].Play();
                 angle += vel;
                 base.Update(gameTime);
-            }    
+            }
         }
 
         /// <summary>
@@ -124,7 +125,7 @@ namespace Game1
             spriteBatch.Draw(textures["shuttle"], location, sourceRectangle, Color.White, angle, origin, 1.0f, SpriteEffects.None, 1);
             spriteBatch.End();
 
-            
+
 
             // TODO: Add your drawing code here
 
