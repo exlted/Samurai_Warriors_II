@@ -116,9 +116,8 @@ namespace Game1
             Rectangle sourceRectangle = new Rectangle(0, 0, textures["shuttle"].Width, textures["shuttle"].Height);
             Vector2 origin = new Vector2(0, 0);
             //Vector2 origin = new Vector2(shuttle.Width / 2, shuttle.Height / 2);
-
-            spriteBatch.Draw(textures["shuttle"], location, sourceRectangle, Color.White, angle, origin, 1.0f, SpriteEffects.None, 1);
             spriteBatch.DrawString(font, "Hello, I am a font", new Vector2(100, 100), Color.WhiteSmoke);
+            spriteBatch.Draw(textures["shuttle"], location, sourceRectangle, Color.White, angle, origin, 1.0f, SpriteEffects.None, 1);
             spriteBatch.End();
 
             
