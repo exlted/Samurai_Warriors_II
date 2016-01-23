@@ -18,7 +18,7 @@ namespace Game1
         SpriteBatch spriteBatch;
         SpriteFont font;
         AudioEngine sound;
-        private SoundEffect music;
+        private Dictionary<string, SoundEffect> sounds = new Dictionary<string, SoundEffect>();
         private Dictionary<string, Texture2D> textures = new Dictionary<string, Texture2D>();
         private string[] import;
         private float angle = 0;
@@ -59,8 +59,12 @@ namespace Game1
             {
                 textures.Add(Path.GetFileNameWithoutExtension(import[i]), Content.Load<Texture2D>("Textures/" + Path.GetFileNameWithoutExtension(import[i])));
             }
+            import = Directory.GetFiles(System.IO.Path.GetFullPath(@"../../../Content/Music"));
+            for (int i = 0; i < import.Length; i++)
+            {
+                sounds.Add(Path.GetFileNameWithoutExtension(import[i]), Content.Load<SoundEffect>("Music/" + Path.GetFileNameWithoutExtension(import[i])));
+            }
             font = Content.Load<SpriteFont>("Fonts/NewSpriteFont");
-            music = Content.Load<SoundEffect>("Music/music");
         }
 
         /// <summary>
@@ -93,7 +97,7 @@ namespace Game1
                 if (Keyboard.GetState().IsKeyDown(Keys.F))
                     graphics.ToggleFullScreen();
                 if (Keyboard.GetState().IsKeyDown(Keys.M))
-                    music.Play();
+                    sounds["music"].Play();
                 angle += vel;
                 base.Update(gameTime);
             }    
