@@ -8,4 +8,9 @@ namespace Game1.BTEngine
     static class Physics //Collision work
     {
     }
+
+    class CollisionMap
+    {
+
+    }
 }

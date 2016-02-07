@@ -33,44 +33,63 @@ namespace BTEngine //A fully 2D engine
             font = game.Content.Load<SpriteFont>("Fonts/NewSpriteFont");
         }
     }
+
     static class Physics //Collision work
     {
+        static List<ICollidable> allObjects;
 
+        public static void addObject(ICollidable newObject)
+        {
+            if (!allObjects.Contains(newObject))
+                allObjects.Add(newObject);
+        }
     }
+
     class World
     {
 
     }
-    class Entity
+
+    class Entity : ICollidable
     {
-        private int X;
-        private int Y;
+
+        Rectangle pos;
         private bool isAlive;
         private Texture2D sprite;
+        private Game theGame;
 
         public enum moveDirection { Up, Down, Left, Right }
 
         public Entity()
         {
-            X = 0;
-            Y = 0;
             isAlive = false;
             sprite = null;
+            theGame = null;
+            pos = new Rectangle(0, 0, 0, 0);
+            Physics.addObject(this);
         }
-        public Entity(int xCoord, int yCoord, Texture2D texture)
+        public Entity(int xCoord, int yCoord, Texture2D texture, Game TheGame = null)
         {
-            X = xCoord;
-            Y = yCoord;
             isAlive = true;
             sprite = texture;
+            theGame = TheGame;
+            pos = new Rectangle(xCoord, yCoord, sprite.Width, sprite.Height);
         }
         public int getX()
         {
-            return X;
+            return pos.X;
         }
         public int getY()
         {
-            return Y;
+            return pos.Y;
+        }
+        public int getWidth()
+        {
+            return pos.Width;
+        }
+        public int getHeight()
+        {
+            return pos.Height;
         }
         public bool isLiving()
         {
@@ -104,21 +123,21 @@ namespace BTEngine //A fully 2D engine
         }
         public bool Move(moveDirection moving, int Distance = 1, bool ignoreDeath = false)
         {
-            if(isAlive || ignoreDeath)
+            if (isAlive || ignoreDeath)
             {
                 switch (moving)
                 {
                     case moveDirection.Up:
-                        Y -= Distance;
+                        pos.Y -= Distance;
                         return true;
                     case moveDirection.Down:
-                        Y += Distance;
+                        pos.Y += Distance;
                         return true;
                     case moveDirection.Left:
-                        X -= Distance;
+                        pos.X -= Distance;
                         return true;
                     case moveDirection.Right:
-                        X += Distance;
+                        pos.X += Distance;
                         return true;
                     default: return false;
                 }
@@ -126,7 +145,16 @@ namespace BTEngine //A fully 2D engine
             return false;
         }
     }
-    class Render
+
+    static class Render
+    {
+        public static void Draw()
+        {
+
+        }
+    }
+
+    interface ICollidable
     {
 
     }
